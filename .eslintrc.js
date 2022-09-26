@@ -32,6 +32,7 @@ module.exports = {
       "LabeledStatement",
       "WithStatement",
     ],
+    "no-underscore-dangle": 0
   },
   settings: {
     "import/resolver": {

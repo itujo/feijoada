@@ -5,7 +5,179 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator typegraphql {
+  provider = "typegraphql-prisma"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model Company {
+  id             Int        @id @default(autoincrement())
+  cnpj           String     @unique
+  name           String
+  clientCode     String     @unique
+  contractNumber String     @unique
+  contractDr     String
+  updatedAt      DateTime   @updatedAt
+  createdAt      DateTime   @default(now())
+  files          File[]
+  movements      Movement[]
+}
+
+enum FileTypes {
+  NATIONAL
+  INTERNATIONAL
+}
+model File {
+  id   Int      @id @default(autoincrement())
+  name String   @unique
+  date DateTime
+
+  debits    Debits[]
+  credits   Credits[]
+  movements Movement[]
+  company   Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId Int
+  processed Boolean    @default(false)
+
+  movementsProcessed Boolean @default(false)
+  creditsProcessed Boolean @default(false)
+  debitsProcessed Boolean @default(false)
+
+  fileType FileTypes
+
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
+
+model Credits {
+  id          BigInt   @id @default(autoincrement())
+  description String
+  value       Decimal @db.Decimal(20,2)
+  date        DateTime?
+  file        File     @relation(fields: [fileId], references: [id], onDelete: Cascade)
+  fileId      Int
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
+}
+
+model Debits {
+  id          BigInt   @id @default(autoincrement())
+  description String
+  value       Decimal @db.Decimal(20,2)
+  date        DateTime?
+  receipt     File     @relation(fields: [fileId], references: [id], onDelete: Cascade)
+  fileId      Int
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
+}
+
+model PostalCard {
+  id     Int    @id @default(autoincrement())
+  number String @unique
+
+  owner String
+
+  movements Movement[]
+
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
+
+model Service {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+  code Int    @unique
+
+  movements Movement[]
+
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
+
+model PostingUnit {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  movements Movement[]
+
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
+
+model Movement {
+  id BigInt @id @default(autoincrement())
+
+  centerOfCost   Company @relation(fields: [centerOfCostId], references: [id], onDelete: Cascade)
+  centerOfCostId Int
+
+  postalCard   PostalCard @relation(fields: [postalCardId], references: [id], onDelete: Cascade)
+  postalCardId Int
+
+  postingDate DateTime
+
+  service   Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  serviceId Int
+
+  itemQty                 Int
+  weight                  Int
+  unitCost                Decimal @db.Decimal(20,2)
+  serviceValue            Decimal @db.Decimal(20,2) 
+  documentNumber          String
+  label                   String
+  declaredValue           Decimal? @db.Decimal(20,2)
+  discountValue           Decimal @db.Decimal(20,2)
+  operationalDiscountCode Int
+  additionalServiceCode   Int
+
+  postingUnit   PostingUnit @relation(fields: [postingUnitId], references: [id], onDelete: Cascade)
+  postingUnitId Int
+
+  originCity   City? @relation(name: "originCity",fields: [originCityId], references: [id], onDelete: Cascade)
+  originCityId Int?
+
+  destinationCity   City? @relation(name: "destinationCity",fields: [destinationCityId], references: [id], onDelete: Cascade)
+  destinationCityId Int?
+  
+  originPostalCode      String
+  destinationPostalCode String
+
+  height     Int
+  width      Int
+  length     Int
+  diameter   Int
+  realWeight Int
+
+  file   File @relation(fields: [fileId], references: [id], onDelete: Cascade)
+  fileId Int
+
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
+
+model State {
+  id   Int    @id @default(autoincrement())
+  name String? @unique
+
+  cities City[]
+
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
+
+model City {
+  id   Int    @id @default(autoincrement())
+  name String? @unique
+
+  state     State?     @relation(fields: [stateId], references: [id], onDelete: Cascade)
+  stateId Int?
+
+  movementsOriginCity Movement[]  @relation("originCity")
+  destinationOriginCity Movement[]  @relation("destinationCity")
+
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
 }
