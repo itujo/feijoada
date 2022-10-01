@@ -23,7 +23,8 @@
     "importsNotUsedAsValues": "error",
     "checkJs": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false
   },
-  "exclude": ["**/*.js", "prisma/**/*.js"]
+  "exclude": ["**/*.js"]
 }

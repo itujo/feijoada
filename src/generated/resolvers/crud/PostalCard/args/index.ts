@@ -1,0 +1,12 @@
+export { AggregatePostalCardArgs } from "./AggregatePostalCardArgs";
+export { CreateManyPostalCardArgs } from "./CreateManyPostalCardArgs";
+export { CreateOnePostalCardArgs } from "./CreateOnePostalCardArgs";
+export { DeleteManyPostalCardArgs } from "./DeleteManyPostalCardArgs";
+export { DeleteOnePostalCardArgs } from "./DeleteOnePostalCardArgs";
+export { FindFirstPostalCardArgs } from "./FindFirstPostalCardArgs";
+export { FindManyPostalCardArgs } from "./FindManyPostalCardArgs";
+export { FindUniquePostalCardArgs } from "./FindUniquePostalCardArgs";
+export { GroupByPostalCardArgs } from "./GroupByPostalCardArgs";
+export { UpdateManyPostalCardArgs } from "./UpdateManyPostalCardArgs";
+export { UpdateOnePostalCardArgs } from "./UpdateOnePostalCardArgs";
+export { UpsertOnePostalCardArgs } from "./UpsertOnePostalCardArgs";

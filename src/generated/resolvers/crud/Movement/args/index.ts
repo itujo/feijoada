@@ -1,0 +1,12 @@
+export { AggregateMovementArgs } from "./AggregateMovementArgs";
+export { CreateManyMovementArgs } from "./CreateManyMovementArgs";
+export { CreateOneMovementArgs } from "./CreateOneMovementArgs";
+export { DeleteManyMovementArgs } from "./DeleteManyMovementArgs";
+export { DeleteOneMovementArgs } from "./DeleteOneMovementArgs";
+export { FindFirstMovementArgs } from "./FindFirstMovementArgs";
+export { FindManyMovementArgs } from "./FindManyMovementArgs";
+export { FindUniqueMovementArgs } from "./FindUniqueMovementArgs";
+export { GroupByMovementArgs } from "./GroupByMovementArgs";
+export { UpdateManyMovementArgs } from "./UpdateManyMovementArgs";
+export { UpdateOneMovementArgs } from "./UpdateOneMovementArgs";
+export { UpsertOneMovementArgs } from "./UpsertOneMovementArgs";

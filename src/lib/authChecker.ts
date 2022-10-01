@@ -1,22 +1,32 @@
-import type { PrismaClient } from '@prisma/client';
-import type { ExpressContext } from 'apollo-server-express';
 import type { AuthChecker } from 'type-graphql';
+import type { MyContext } from '../@types/context';
 
-export const customAuthChecker: AuthChecker<{
-  ctx: ExpressContext;
-  prisma: PrismaClient;
-}> = ({ context }, roles) => {
-  console.log(context.ctx.req.body);
+export const customAuthChecker: AuthChecker<MyContext> = async (
+  { context },
+  roles,
+) => {
+  const { req } = context;
 
-  // console.log({ context });
+  if (!req.session.user) {
+    return false;
+  }
 
-  // console.log(req.body);
+  const user = await context.prisma.user.findUnique({
+    where: {
+      id: req.session.user.id,
+    },
+    select: {
+      role: true,
+    },
+  });
 
-  // console.log({ req, roles });
+  if (!user) return false;
 
-  // here we can read the user from context
-  // and check his permission in the db against the `roles` argument
-  // that comes from the `@Authorized` decorator, eg. ["ADMIN", "MODERATOR"]
+  const { role } = user;
 
-  return false; // or false if access is denied
+  if (roles.includes(role)) {
+    return true;
+  }
+
+  return false; // default deny
 };

@@ -1,0 +1,12 @@
+export { AggregateServiceArgs } from "./AggregateServiceArgs";
+export { CreateManyServiceArgs } from "./CreateManyServiceArgs";
+export { CreateOneServiceArgs } from "./CreateOneServiceArgs";
+export { DeleteManyServiceArgs } from "./DeleteManyServiceArgs";
+export { DeleteOneServiceArgs } from "./DeleteOneServiceArgs";
+export { FindFirstServiceArgs } from "./FindFirstServiceArgs";
+export { FindManyServiceArgs } from "./FindManyServiceArgs";
+export { FindUniqueServiceArgs } from "./FindUniqueServiceArgs";
+export { GroupByServiceArgs } from "./GroupByServiceArgs";
+export { UpdateManyServiceArgs } from "./UpdateManyServiceArgs";
+export { UpdateOneServiceArgs } from "./UpdateOneServiceArgs";
+export { UpsertOneServiceArgs } from "./UpsertOneServiceArgs";

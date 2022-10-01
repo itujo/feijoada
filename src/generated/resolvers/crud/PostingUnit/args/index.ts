@@ -1,0 +1,12 @@
+export { AggregatePostingUnitArgs } from "./AggregatePostingUnitArgs";
+export { CreateManyPostingUnitArgs } from "./CreateManyPostingUnitArgs";
+export { CreateOnePostingUnitArgs } from "./CreateOnePostingUnitArgs";
+export { DeleteManyPostingUnitArgs } from "./DeleteManyPostingUnitArgs";
+export { DeleteOnePostingUnitArgs } from "./DeleteOnePostingUnitArgs";
+export { FindFirstPostingUnitArgs } from "./FindFirstPostingUnitArgs";
+export { FindManyPostingUnitArgs } from "./FindManyPostingUnitArgs";
+export { FindUniquePostingUnitArgs } from "./FindUniquePostingUnitArgs";
+export { GroupByPostingUnitArgs } from "./GroupByPostingUnitArgs";
+export { UpdateManyPostingUnitArgs } from "./UpdateManyPostingUnitArgs";
+export { UpdateOnePostingUnitArgs } from "./UpdateOnePostingUnitArgs";
+export { UpsertOnePostingUnitArgs } from "./UpsertOnePostingUnitArgs";

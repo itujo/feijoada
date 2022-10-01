@@ -1,0 +1,12 @@
+export { AggregateDebitsArgs } from "./AggregateDebitsArgs";
+export { CreateManyDebitsArgs } from "./CreateManyDebitsArgs";
+export { CreateOneDebitsArgs } from "./CreateOneDebitsArgs";
+export { DeleteManyDebitsArgs } from "./DeleteManyDebitsArgs";
+export { DeleteOneDebitsArgs } from "./DeleteOneDebitsArgs";
+export { FindFirstDebitsArgs } from "./FindFirstDebitsArgs";
+export { FindManyDebitsArgs } from "./FindManyDebitsArgs";
+export { FindUniqueDebitsArgs } from "./FindUniqueDebitsArgs";
+export { GroupByDebitsArgs } from "./GroupByDebitsArgs";
+export { UpdateManyDebitsArgs } from "./UpdateManyDebitsArgs";
+export { UpdateOneDebitsArgs } from "./UpdateOneDebitsArgs";
+export { UpsertOneDebitsArgs } from "./UpsertOneDebitsArgs";

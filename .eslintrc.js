@@ -33,12 +33,15 @@ module.exports = {
       "WithStatement",
     ],
     "no-underscore-dangle": 0
+    ,"max-classes-per-file": 0
+    ,"class-methods-use-this": 0
   },
   settings: {
     "import/resolver": {
       node: {
         extensions: [".ts"],
       },
+      "typescript": {}
     },
   },
 };

@@ -1,10 +1,16 @@
 import 'reflect-metadata';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { applyResolversEnhanceMap, resolvers } from '@generated/type-graphql';
-import { ApolloServer } from 'apollo-server';
+import { ApolloServer } from 'apollo-server-express';
+import connectRedis from 'connect-redis';
+import cors from 'cors';
+import express from 'express';
+import session from 'express-session';
+import Redis from 'ioredis';
 import { schedule } from 'node-cron';
 import { buildSchema } from 'type-graphql';
+import type { MyContext } from './@types/context';
+import { COOKIE_NAME, __prod__ } from './constants';
 import {
   saveCredits,
   saveDebits,
@@ -13,9 +19,11 @@ import {
 } from './controllers/db/Savetodb.controller';
 import { downloadFtpFiles } from './controllers/ftp/Ftp.controller';
 import { parseFiles } from './controllers/parse/Csvparse.controller';
+import { applyResolversEnhanceMap, resolvers } from './generated';
 import { customAuthChecker } from './lib/authChecker';
-import { resolversEnhanceMap } from './lib/gql';
 import { prisma } from './lib/prisma';
+import { resolversEnhanceMap } from './lib/resolverEnhanceMap';
+import { UserResolver } from './resolvers/user';
 
 const crawler = async () => {
   console.time('do all');
@@ -49,24 +57,67 @@ schedule('* 4,6 * * *', async () => {
 const PORT = process.env.PORT || 4000;
 
 const main = async () => {
+  const app = express();
+
+  const RedisStore = connectRedis(session);
+
+  const redis = new Redis(process.env.REDIS_URL);
+
+  app.set('trust proxy', true);
+
+  app.use(
+    cors({
+      origin: ['https://studio.apollographql.com', 'http://localhost:3000'],
+      credentials: true,
+    }),
+  );
+
+  app.use(
+    session({
+      name: COOKIE_NAME,
+      store: new RedisStore({
+        client: redis,
+        disableTouch: true,
+      }),
+      cookie: {
+        maxAge: 1000 * 60 * 60 * 24, // 1 day
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: __prod__,
+        // domain: __prod__ ? '*.anjunexpress.com' : undefined,
+      },
+      saveUninitialized: false,
+      secret: process.env.SESSION_SECRET,
+      resave: false,
+    }),
+  );
+
   applyResolversEnhanceMap(resolversEnhanceMap);
   const schema = await buildSchema({
-    resolvers: [...resolvers],
+    resolvers: [...resolvers, UserResolver],
     validate: false,
     authChecker: customAuthChecker,
   });
 
-  const server = new ApolloServer({
+  const apolloServer = new ApolloServer({
     schema,
-    context: (ctx) => ({ prisma, ctx }),
+    context: ({ req, res }): Partial<MyContext> => ({
+      req,
+      res,
+      prisma,
+    }),
   });
 
-  const { url } = await server.listen(PORT);
-  console.log(`Server is running at ${url}`);
+  await apolloServer.start();
+
+  apolloServer.applyMiddleware({
+    app,
+    cors: false,
+  });
+
+  app.listen(PORT, () => {
+    console.log(`server started on change localhost:${PORT}`);
+  });
 };
 
-try {
-  main();
-} catch (error) {
-  console.log(error);
-}
+main().catch((e) => console.log(e));

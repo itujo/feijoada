@@ -1,0 +1,12 @@
+export { AggregateCreditsArgs } from "./AggregateCreditsArgs";
+export { CreateManyCreditsArgs } from "./CreateManyCreditsArgs";
+export { CreateOneCreditsArgs } from "./CreateOneCreditsArgs";
+export { DeleteManyCreditsArgs } from "./DeleteManyCreditsArgs";
+export { DeleteOneCreditsArgs } from "./DeleteOneCreditsArgs";
+export { FindFirstCreditsArgs } from "./FindFirstCreditsArgs";
+export { FindManyCreditsArgs } from "./FindManyCreditsArgs";
+export { FindUniqueCreditsArgs } from "./FindUniqueCreditsArgs";
+export { GroupByCreditsArgs } from "./GroupByCreditsArgs";
+export { UpdateManyCreditsArgs } from "./UpdateManyCreditsArgs";
+export { UpdateOneCreditsArgs } from "./UpdateOneCreditsArgs";
+export { UpsertOneCreditsArgs } from "./UpsertOneCreditsArgs";

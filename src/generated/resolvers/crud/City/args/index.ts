@@ -1,0 +1,12 @@
+export { AggregateCityArgs } from "./AggregateCityArgs";
+export { CreateManyCityArgs } from "./CreateManyCityArgs";
+export { CreateOneCityArgs } from "./CreateOneCityArgs";
+export { DeleteManyCityArgs } from "./DeleteManyCityArgs";
+export { DeleteOneCityArgs } from "./DeleteOneCityArgs";
+export { FindFirstCityArgs } from "./FindFirstCityArgs";
+export { FindManyCityArgs } from "./FindManyCityArgs";
+export { FindUniqueCityArgs } from "./FindUniqueCityArgs";
+export { GroupByCityArgs } from "./GroupByCityArgs";
+export { UpdateManyCityArgs } from "./UpdateManyCityArgs";
+export { UpdateOneCityArgs } from "./UpdateOneCityArgs";
+export { UpsertOneCityArgs } from "./UpsertOneCityArgs";

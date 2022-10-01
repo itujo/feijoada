@@ -1,23 +1,22 @@
 services:
-  # postgres:
-  #   container_name: postgres
-  #   image: postgres:latest
-  #   environment:
-  #     - POSTGRES_USER=${POSTGRES_USER}
-  #     - POSTGRES_PASSWORD=${POSTGRES_PW}
-  #     - POSTGRES_DB=${POSTGRES_DB} #optional (specify default database instead of $POSTGRES_USER)
-  #   ports:
-  #     - '5432:5432'
-  #   restart: always
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PW}
+      - POSTGRES_DB=${POSTGRES_DB} #optional (specify default database instead of $POSTGRES_USER)
+    ports:
+      - '5432:5432'
+    restart: always
 
   redis:
     image: redis:latest
     environment:
       # ALLOW_EMPTY_PASSWORD is recommended only for development.
-      - ALLOW_EMPTY_PASSWORD=no
+      - ALLOW_EMPTY_PASSWORD=yes
       - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
-    command: >
-      --requirepass ${REDIS_PASSWORD}
+
     ports:
       - '6389:6379'
     restart: always
