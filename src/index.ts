@@ -67,7 +67,12 @@ const main = async () => {
 
   app.use(
     cors({
-      origin: ['https://studio.apollographql.com', 'http://localhost:3000'],
+      origin: __prod__
+        ? [
+            'https://caipirinha.vercel.app',
+            'https://caipirinha.anjunexpress.com.br',
+          ]
+        : ['https://studio.apollographql.com', 'http://localhost:3000'],
       credentials: true,
     }),
   );
@@ -82,9 +87,9 @@ const main = async () => {
       cookie: {
         maxAge: 1000 * 60 * 60 * 24, // 1 day
         httpOnly: true,
-        sameSite: 'lax',
-        secure: __prod__,
-        // domain: __prod__ ? '*.anjunexpress.com' : undefined,
+        sameSite: 'none',
+        secure: true,
+        domain: __prod__ ? '.anjunexpress.com.br' : undefined,
       },
       saveUninitialized: false,
       secret: process.env.SESSION_SECRET,
@@ -106,6 +111,7 @@ const main = async () => {
       res,
       prisma,
     }),
+    cache: 'bounded',
   });
 
   await apolloServer.start();

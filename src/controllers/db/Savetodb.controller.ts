@@ -282,14 +282,13 @@ const saveMovements = async (
     }
 
     if (dataToSave.length > 0) {
-      const splitted = arraySplitter(dataToSave, 50000);
+      const splitted = arraySplitter(dataToSave, 1000);
 
       // let total = 0;
       for await (const split of splitted) {
         await prisma.movement.createMany({
           data: split.map((n) => n),
         });
-        // total += movs.count;
       }
 
       // const lastLine = lines[lines.length - 1]?.at(0);
